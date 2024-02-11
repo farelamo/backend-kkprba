@@ -34,7 +34,7 @@ class AuthController extends Controller
                 return $this->returnCondition(false, 401, 'incorrect password');
             }
 
-            Cookie::queue('token', $token, auth()->factory()->getTTL() * 60);
+            // Cookie::queue('token', $token, auth()->factory()->getTTL() * 60);
 
             return response()->json([
                 'success' => true,
@@ -46,7 +46,7 @@ class AuthController extends Controller
                     ],
                     'expires_in' => auth()->factory()->getTTL() * 60,
                 ],
-            ], 200);
+            ], 200)->withCookie(Cookie::make('token', $token, auth()->factory()->getTTL() * 60));
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return $this->returnCondition(false, 500, 'Internal Server Error');
