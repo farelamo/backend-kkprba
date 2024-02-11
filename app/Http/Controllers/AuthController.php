@@ -34,7 +34,7 @@ class AuthController extends Controller
                 return $this->returnCondition(false, 401, 'incorrect password');
             }
 
-            // Cookie::queue('token', $token, auth()->factory()->getTTL() * 60);
+            Cookie::queue('token', $token, auth()->factory()->getTTL() * 60);
 
             return response()->json([
                 'success' => true,
