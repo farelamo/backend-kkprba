@@ -46,7 +46,7 @@ class AuthController extends Controller
                     ],
                     'expires_in' => auth()->factory()->getTTL() * 60,
                 ],
-            ], 200)->withCookie(Cookie::make('token', $token, auth()->factory()->getTTL() * 60));
+            ], 200)->withCookie(Cookie::make('token', $token, auth()->factory()->getTTL() * 60, '/', env('SESSION_DOMAIN', 'https://www.admin.kkprba.com')));
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return $this->returnCondition(false, 500, 'Internal Server Error');
