@@ -17,7 +17,7 @@ class BlogUpdateRequest extends FormRequest
             'title' => 'required|min:5|max:50',
             'short_title' => 'required|min:5|max:30',
             'description' => 'required|min:5',
-            'is_carousel'=> 'required',
+            'is_carousel'=> 'required|in:0,1',
             'categories' => 'required'
         ];
     }
@@ -34,6 +34,7 @@ class BlogUpdateRequest extends FormRequest
             'description.required' => 'Deskripsi wajib diisi',
             'description.min' => 'Deskripsi minimal 5 karakter',
             'is_carousel' => 'carousel wajib diisi',
+            'is_carousel.in' => 'carousel harus bernilai 0 atau 1',
             'categories.required' => 'Kategori wajib diisi',
         ];
     }
