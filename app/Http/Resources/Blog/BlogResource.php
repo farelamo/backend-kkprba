@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Blog;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BlogResource extends JsonResource
@@ -15,7 +16,7 @@ class BlogResource extends JsonResource
                 'id' => $this->id,
                 'title' => $this->title,
                 'short_title' => $this->short_title,
-                'image' => env('APP_URL', 'localhost:8000') . $this->image,
+                'image' => env('APP_URL', 'localhost:8000') . Storage::url('images/blog/' . $this->image),
                 'description' => $this->description,
                 'is_carousel' => $this->is_carousel,
                 'categories' => $this->categories->map(function($cat){

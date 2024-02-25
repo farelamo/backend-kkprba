@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Regulation;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class RegulationCollection extends ResourceCollection
@@ -16,7 +17,7 @@ class RegulationCollection extends ResourceCollection
                     'id' => $data->id,
                     'title' => $data->title,
                     'short_title' => $data->short_title,
-                    'image' => env('APP_URL', 'localhost:8000') . $data->image,
+                    'image' => env('APP_URL', 'localhost:8000') . Storage::url('images/regulation/' . $data->image),
                     'description' => $data->description,
                     'is_carousel' => $data->is_carousel,
                     'categories' => $data->categories->map(function($cat){
