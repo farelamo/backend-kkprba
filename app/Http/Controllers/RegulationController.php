@@ -21,9 +21,15 @@ class RegulationController extends Controller
     
     public function index(Request $request) {
         $regulations = Regulation::select('id', 'title', 'short_title', 'image', 'description', 'created_at', 'updated_at')
-                        ->when($request->search, function($q){
+                        ->when($request->search, function($q) use ($request) {
                             $q->where('title', 'like', '%'.$request->search.'%');
                             $q->orWhere('short_title', 'like', '%'.$request->search.'%');
+                        })
+                        ->when($request->categories, function($q) use ($request){
+                            $q->whereHas('categories', function($q) use ($request){
+                                $request->categories = explode(',', $request->categories);
+                                $q->whereIn('regulation_categories.id', $request->categories);
+                            });
                         })
                         ->orderBy('id', 'desc')
                         ->paginate(10);
