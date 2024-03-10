@@ -9,5 +9,5 @@ class TotalViewer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['total_views'];
+    protected $fillable = ['date'];
 }

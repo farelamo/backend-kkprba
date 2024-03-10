@@ -14,29 +14,30 @@ class DashboardController extends Controller
 
     public function index(){
 
-        $total = TotalViewer::select('total_views')->first();
+        $day   = TotalViewer::where('date', date('Y-m-d'))->count();
+        $month = TotalViewer::where('date', 'like', '%' . date('Y-m') . '%')->count();
+        $year  = TotalViewer::where('date', 'like', '%' . date('Y') . '%')->count();
+        $total = TotalViewer::count();
 
         return response()->json([
             'success' => true,
             'data' => [
-                'total' => $total->total_views ?? 0
+                'day'   => $day,
+                'month' => $month,
+                'year'  => $year,
+                'total' => $total
             ],
         ]);
     }
 
     public function update(Request $request){
 
-        $getTotal = TotalViewer::first();
-        $total    = $getTotal->total_views ?? 0;
+        $now = date('Y-m-d');
 
-        $updateData = [
-            'total_views' => $total + 1
-        ];
+        TotalViewer::create([
+            'date' => $now
+        ]);
 
-        TotalViewer::updateOrCreate(
-            ['id' => $getTotal->id ?? 1], $updateData
-        );
-
-        return $this->returnCondition(true, 200, 'Data updated successfully');
+        return $this->returnCondition(true, 200, 'Data created successfully');
     }
 }
